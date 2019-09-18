@@ -9,12 +9,12 @@ router.get('/status', (req, res, next) =>  bb.all([thermals.criticalTemperature(
     environment: process.env,
     temperature: {
       critical: {
-        celsius: criticalTemp,
-        fahrenheit: thermals.celsiusToFahrenheit(criticalTemp),
+        celsius: Math.round(criticalTemp),
+        fahrenheit: Math.round(thermals.celsiusToFahrenheit(criticalTemp)),
       },
       average: {
-        celsius: averageTemp,
-        fahrenheit: thermals.celsiusToFahrenheit(averageTemp),
+        celsius: Math.round(averageTemp),
+        fahrenheit: Math.round(thermals.celsiusToFahrenheit(averageTemp)),
       }
     },
   }))

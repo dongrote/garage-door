@@ -1,3 +1,3 @@
 'use strict';
 
-exports = module.exports = c => (c * 2) + 30;
+exports = module.exports = c => (c * 1.8) + 32;

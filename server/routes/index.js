@@ -2,6 +2,7 @@
 const router = require('express').Router(),
   bb = require('bluebird'),
   cp = require('child_process'),
+  camera = require('../camera'),
   thermals = require('../thermals');
 
 router.get('/status', (req, res, next) =>  bb.all([thermals.criticalTemperature(), thermals.averageSystemTemperature()])
@@ -22,6 +23,11 @@ router.get('/status', (req, res, next) =>  bb.all([thermals.criticalTemperature(
 
 router.post('/toggle-event', (req, res, next) => {
   cp.execFile('toggle-garage-door', err => err ? next(err) : res.sendStatus(204));
+});
+
+router.get('/picture', (req, res, next) => {
+  res.set('Content-Type', 'image/jpeg; charset=binary');
+  res.send(camera.imageBuffer());
 });
 
 module.exports = router;

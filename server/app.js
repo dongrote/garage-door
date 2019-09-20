@@ -4,6 +4,7 @@ const _ = require('lodash'),
   log = require('debug-logger')('app'),
   logger = require('morgan'),
   router = require('./routes'),
+  camera = require('./camera'),
   app = express();
 
 app.use(logger('dev'));
@@ -18,5 +19,10 @@ app.use((err, req, res, next) => {
     ? {error: {message: err.message}}
     : {error: {message: err.message, stack: err.stack}});
 });
+
+(() => {
+  camera.startForeverLoop();
+  return null;
+})();
 
 exports = module.exports = app;

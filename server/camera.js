@@ -22,6 +22,7 @@ const getImage = () => new Promise((resolve, reject) => {
 .catch(log.error);
 
 const startForeverLoop = () => {
+  log.info(`capturing image in ${env.pictureInterval()} milliseconds`);
   setTimeout(() => getImage().then(() => startForeverLoop()).catch(log.error), env.pictureInterval());
 };
 

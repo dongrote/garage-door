@@ -5,7 +5,7 @@ let buf;
 
 const getImage = () => new Promise((resolve, reject) => {
   let stdoutData = Buffer.alloc(0);
-  const child = cp.spawn('raspistill');
+  const child = cp.spawn('raspistill', ['-o', '-', '-t', '2000']);
   child
     .on('error', err => reject(err))
     .on('exit', (code, signal) => resolve(stdoutData));

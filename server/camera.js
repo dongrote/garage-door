@@ -22,7 +22,7 @@ const getImage = () => new Promise((resolve, reject) => {
 .catch(log.error);
 
 const startForeverLoop = () => {
-  setTimeout(() => getImage().finally(() => startForeverLoop()), env.pictureInterval());
+  setTimeout(() => getImage().then(() => startForeverLoop()).catch(log.error), env.pictureInterval());
 };
 
 exports = module.exports = {

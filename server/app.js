@@ -20,9 +20,6 @@ app.use((err, req, res, next) => {
     : {error: {message: err.message, stack: err.stack}});
 });
 
-(() => {
-  camera.startForeverLoop();
-  return null;
-})();
+camera.startForeverLoop();
 
 exports = module.exports = app;

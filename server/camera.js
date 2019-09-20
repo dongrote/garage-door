@@ -1,9 +1,11 @@
 'use strict';
 const cp = require('child_process'),
-  env = require('./environment');
+  env = require('./environment'),
+  log = require('debug-logger')('camera');
 let buf;
 
 const getImage = () => new Promise((resolve, reject) => {
+  log.info('capturing photo');
   let stdoutData = Buffer.alloc(0);
   const child = cp.spawn('raspistill', ['-o', '-', '-t', '2000']);
   child
@@ -14,8 +16,10 @@ const getImage = () => new Promise((resolve, reject) => {
   });
 })
 .then(newImageData => {
+  log.debug('captured image size', newImageData.length);
   buf = newImageData;
-});
+})
+.catch(log.error);
 
 const startForeverLoop = () => {
   setTimeout(() => getImage().finally(() => startForeverLoop()), env.pictureInterval());

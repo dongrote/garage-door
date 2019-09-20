@@ -1,5 +1,6 @@
 'use strict';
 const _ = require('lodash'),
+  HttpError = require('http-error-constructor'),
   express = require('express'),
   log = require('debug-logger')('app'),
   logger = require('morgan'),

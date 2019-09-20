@@ -7,7 +7,7 @@ let buf;
 const getImage = () => new Promise((resolve, reject) => {
   log.info('capturing photo');
   let stdoutData = Buffer.alloc(0);
-  const child = cp.spawn('raspistill', ['-o', '-', '-t', '2000']);
+  const child = cp.spawn('raspistill', ['-o', '-', '-t', `${env.captureTimeout()}`]);
   child
     .on('error', err => reject(err))
     .on('exit', (code, signal) => resolve(stdoutData));

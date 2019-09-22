@@ -45,6 +45,7 @@ exports = module.exports = {
   getImage,
   startForeverLoop,
   isIdle,
+  pictureInterval,
   imageBuffer: () => {
     lastRequest = new Date();
     return Buffer.from(buf);

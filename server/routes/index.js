@@ -1,5 +1,7 @@
 'use strict';
-const router = require('express').Router(),
+const _ = require('lodash'),
+  env = require('../environment'),
+  router = require('express').Router(),
   bb = require('bluebird'),
   cp = require('child_process'),
   camera = require('../camera'),
@@ -7,7 +9,7 @@ const router = require('express').Router(),
 
 router.get('/status', (req, res, next) =>  bb.all([thermals.criticalTemperature(), thermals.averageSystemTemperature()])
   .then(([criticalTemp, averageTemp]) => res.json({
-    environment: process.env,
+    environment: _.mapValues(env, v => v()),
     temperature: {
       critical: {
         celsius: Math.round(criticalTemp),
@@ -16,7 +18,11 @@ router.get('/status', (req, res, next) =>  bb.all([thermals.criticalTemperature(
       average: {
         celsius: Math.round(averageTemp),
         fahrenheit: Math.round(thermals.celsiusToFahrenheit(averageTemp)),
-      }
+      },
+      camera: {
+        isIdle: camera.isIdle(),
+        pictureInterval: camera.pictureInterval(),
+      },
     },
   }))
   .catch(next));

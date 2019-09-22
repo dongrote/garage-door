@@ -31,7 +31,7 @@ const getImage = () => new Promise((resolve, reject) => {
 
 const isIdle = () => moment().subtract(1, 'minutes').isBefore(lastRequest);
 
-const pictureInterval = () => isIdle() ? env.pictureInterval() : env.idlePictureInterval();
+const pictureInterval = () => isIdle() ? env.idlePictureInterval() : env.pictureInterval();
 
 const startForeverLoop = () => {
   log.info(`capturing image in ${pictureInterval()} milliseconds`);
